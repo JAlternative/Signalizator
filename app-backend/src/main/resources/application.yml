@@ -1,9 +1,11 @@
 spring:
   application:
     name: app-backend
-
-server:
-  port: 9094
+  datasource:
+    url: jdbc:postgresql://localhost:5433/agent_platform
+    username: agent_platform_user
+    password: agent_platform_password
+    driver-class-name: org.postgresql.Driver
 
 management:
   endpoints:

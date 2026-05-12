@@ -1,7 +1,12 @@
+spring:
+  application:
+    name: app-backend
+
 server:
   port: 9094
 
 management:
   endpoints:
     web:
-      exposure: include:health,info
+      exposure:
+        include: health,info

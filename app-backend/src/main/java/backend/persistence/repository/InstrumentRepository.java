@@ -11,5 +11,6 @@ public interface InstrumentRepository extends JpaRepository<Instrument, Long> {
 
     List<Instrument> findByEnabledTrue();
     Optional<Instrument> findBySourceAndTickerAndBoard(Source source, String ticker, String board);
+    List<Instrument> findAllBySourceId(Long sourceId);
 
 }

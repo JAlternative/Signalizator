@@ -50,6 +50,9 @@ public class MarketDirectoryService {
 
     //---------------------------------------------------------------------------------
 
+    public Optional<Source> getSourceById(Long id) {
+        return sourceRepository.findById(id);
+    }
 
     public List<Source> getEnabledSources() {
         return sourceRepository.findByEnabledTrue();

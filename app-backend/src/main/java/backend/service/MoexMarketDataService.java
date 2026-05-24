@@ -1,6 +1,8 @@
 package backend.service;
 
 import backend.integration.moex.MoexIssClient;
+import backend.integration.moex.MoexMarketDataParser;
+import backend.integration.moex.dto.MoexMarketDataSnapshot;
 import backend.persistence.entity.Instrument;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ public class MoexMarketDataService {
 
     private final MoexIssClient moexIssClient;
     private final MarketDirectoryService marketDirectoryService;
+    private final MoexMarketDataParser moexMarketDataParser;
 
     @Transactional(readOnly = true)
     public Optional<String> getRawSecurityDataByInstrumentId(Long instrumentId) {
@@ -33,5 +36,16 @@ public class MoexMarketDataService {
         );
 
         return Optional.ofNullable(response);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<MoexMarketDataSnapshot> getMarketDataSnapshotByInstrumentId(Long instrumentId) {
+        Optional<String> rawJson = getRawSecurityDataByInstrumentId(instrumentId);
+
+        if (rawJson.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return moexMarketDataParser.parseMarketDataSnapshot(rawJson.get());
     }
 }

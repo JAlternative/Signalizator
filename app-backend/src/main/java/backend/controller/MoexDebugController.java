@@ -1,5 +1,6 @@
 package backend.controller;
 
+import backend.integration.moex.dto.MoexMarketDataSnapshot;
 import backend.service.MoexMarketDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,14 +20,20 @@ public class MoexDebugController {
     private final MoexMarketDataService moexMarketDataService;
 
     @GetMapping("/instruments/{id}/raw")
-    public ResponseEntity<String> getRawSecurityDataByInstrumentId(
-            @PathVariable Long id
-    ) {
+    public ResponseEntity<String> getRawSecurityDataByInstrumentId(@PathVariable Long id) {
         Optional<String> rawJson = moexMarketDataService.getRawSecurityDataByInstrumentId(id);
-        return rawJson.map(string -> ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(string)).orElseGet(() -> ResponseEntity.notFound().build());
 
+        return rawJson
+                .map(json -> ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(json))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/instruments/{id}/snapshot")
+    public ResponseEntity<MoexMarketDataSnapshot> getMarketDataSnapshotByInstrumentId(@PathVariable Long id) {
+        return moexMarketDataService.getMarketDataSnapshotByInstrumentId(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

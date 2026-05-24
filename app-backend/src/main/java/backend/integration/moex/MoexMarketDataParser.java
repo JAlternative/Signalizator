@@ -1,15 +1,18 @@
 package backend.integration.moex;
 
 import backend.integration.moex.dto.MoexMarketDataSnapshot;
-import backend.utils.Utils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class MoexMarketDataParser {
 
+    private final MoexTableMapper moexTableMapper;
+
     public Optional<MoexMarketDataSnapshot> parseMarketDataSnapshot(String rawJson) {
-        return Utils.readTree(rawJson, MoexMarketDataSnapshot.class);
+        return moexTableMapper.mapFirstRow(rawJson, "marketdata", MoexMarketDataSnapshot.class);
     }
 }

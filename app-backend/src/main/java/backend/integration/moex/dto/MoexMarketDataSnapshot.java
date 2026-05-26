@@ -1,6 +1,7 @@
 package backend.integration.moex.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import java.math.BigDecimal;
 /**
  * secId / boardId       = что за инструмент и режим торгов
@@ -16,55 +17,55 @@ import java.math.BigDecimal;
  * updateTime/systemTime = время обновления данных
  * */
 public record MoexMarketDataSnapshot(
-        @JsonProperty("SECID")
+        @JsonAlias("SECID")
         String secId,
 
-        @JsonProperty("BOARDID")
+        @JsonAlias("BOARDID")
         String boardId,
 
-        @JsonProperty("BID")
+        @JsonAlias("BID")
         BigDecimal bid,
 
-        @JsonProperty("OFFER")
+        @JsonAlias("OFFER")
         BigDecimal offer,
 
-        @JsonProperty("SPREAD")
+        @JsonAlias("SPREAD")
         BigDecimal spread,
 
-        @JsonProperty("OPEN")
+        @JsonAlias("OPEN")
         BigDecimal open,
 
-        @JsonProperty("LOW")
+        @JsonAlias("LOW")
         BigDecimal low,
 
-        @JsonProperty("HIGH")
+        @JsonAlias("HIGH")
         BigDecimal high,
 
-        @JsonProperty("LAST")
+        @JsonAlias("LAST")
         BigDecimal last,
 
-        @JsonProperty("WAPRICE")
+        @JsonAlias("WAPRICE")
         BigDecimal waprice,
 
-        @JsonProperty("CHANGE")
+        @JsonAlias("CHANGE")
         BigDecimal change,
 
-        @JsonProperty("NUMTRADES")
+        @JsonAlias("NUMTRADES")
         Integer numTrades,
 
-        @JsonProperty("VOLTODAY")
+        @JsonAlias("VOLTODAY")
         Long volumeToday,
 
-        @JsonProperty("VALTODAY")
+        @JsonAlias("VALTODAY")
         Long valueToday,
 
-        @JsonProperty("TRADINGSTATUS")
+        @JsonAlias("TRADINGSTATUS")
         String tradingStatus,
 
-        @JsonProperty("UPDATETIME")
+        @JsonAlias("UPDATETIME")
         String updateTime,
 
-        @JsonProperty("SYSTIME")
+        @JsonAlias("SYSTIME")
         String systemTime
 ) {
 }

@@ -7,3 +7,6 @@ databaseChangeLog:
 
   - include:
       file: db/changelog/changes/003-seed-moex-and-watchlist.sql
+
+  - include:
+      file: db/changelog/changes/004-create-price-points.sql

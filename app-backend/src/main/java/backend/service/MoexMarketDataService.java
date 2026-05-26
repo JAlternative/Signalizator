@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static backend.utils.Utils.parseLocalDateTime;
@@ -105,5 +106,10 @@ public class MoexMarketDataService {
         pricePoint.setSystemTime(parseLocalDateTime(snapshot.systemTime()));
 
         return pricePoint;
+    }
+
+    @Transactional(readOnly = true)
+    public List<PricePoint> getPricePointHistory(Long instrumentId) {
+        return pricePointRepository.findTop100ByInstrumentIdOrderBySystemTimeDesc(instrumentId);
     }
 }

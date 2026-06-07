@@ -54,7 +54,7 @@ public class Signal {
     @Column(name = "status", nullable = false, length = 32)
     private String status = "NEW";
 
-    @Column(name = "dedup_key", nullable = false, length = 255)
+    @Column(name = "dedup_key", nullable = false, unique = true, length = 255)
     private String dedupKey;
 
     @CreationTimestamp

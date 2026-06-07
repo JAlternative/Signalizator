@@ -13,3 +13,6 @@ databaseChangeLog:
 
   - include:
       file: db/changelog/changes/005-create-rules.sql
+
+  - include:
+      file: db/changelog/changes/006-seed-mvp-rules.sql

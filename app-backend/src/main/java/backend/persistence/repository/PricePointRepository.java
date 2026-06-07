@@ -8,4 +8,6 @@ import java.util.List;
 public interface PricePointRepository extends JpaRepository<PricePoint, Long> {
 
     List<PricePoint> findTop100ByInstrumentIdOrderBySystemTimeDesc(Long instrumentId);
+
+    List<PricePoint> findTop2ByInstrumentIdOrderBySystemTimeDesc(Long instrumentId);
 }

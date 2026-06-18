@@ -36,7 +36,8 @@ public class PriceChangeSignalService {
 
     @Transactional
     public Optional<Signal> generateForInstrument(Long instrumentId) {
-        List<PricePoint> points = pricePointRepository.findTop2ByInstrumentIdOrderBySystemTimeDesc(instrumentId);
+        List<PricePoint> points =
+                pricePointRepository.findTop2ByInstrumentIdOrderBySystemTimeDescIdDesc(instrumentId);
 
         if (points.size() < 2) {
             return Optional.empty();

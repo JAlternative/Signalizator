@@ -15,7 +15,7 @@ public class MoexWatchlistScheduler {
     private final MoexWatchlistCollectorService moexWatchlistCollectorService;
 
 
-    @Scheduled(fixedDelayString = "${app.moex.collector.fixed-delay-ms}")
+//    @Scheduled(fixedDelayString = "${app.moex.collector.fixed-delay-ms}")
     public void collectWatchlistBySchedule() {
         List<Long> pricePoints = moexWatchlistCollectorService.collectEnabledMoexWatchlistOnce();
         log.info("MOEX watchlist collector finished. Saved pricePoint ids: {}", pricePoints);

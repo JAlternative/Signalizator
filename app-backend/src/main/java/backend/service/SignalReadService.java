@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,13 @@ public class SignalReadService {
                 .findTop100ByStatusOrderByCreatedAtDesc(SignalStatus.NEW.name())
                 .stream().map(this::toResponse)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<SignalResponse> getSignalById(Long id) {
+        return signalRepository
+                .findById(id)
+                .map(this::toResponse);
     }
 
     private SignalResponse toResponse(Signal signal) {

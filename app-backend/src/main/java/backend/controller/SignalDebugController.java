@@ -30,4 +30,12 @@ public class SignalDebugController {
     public ResponseEntity<List<SignalResponse>> getLatestSignals() {
         return ResponseEntity.ok(signalReadService.getLatestNewSignals());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SignalResponse> getSignalById(@PathVariable Long id) {
+        return signalReadService
+                .getSignalById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

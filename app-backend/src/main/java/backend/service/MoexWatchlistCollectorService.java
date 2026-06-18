@@ -14,6 +14,7 @@ public class MoexWatchlistCollectorService {
 
     private final MarketDirectoryService marketDirectoryService;
     private final MoexMarketDataService moexMarketDataService;
+    private final PriceChangeSignalService priceChangeSignalService;
 
     public List<Long> collectEnabledMoexWatchlistOnce() {
         List<Instrument> instruments = marketDirectoryService.getEnabledMoexInstruments();
@@ -21,8 +22,10 @@ public class MoexWatchlistCollectorService {
 
         for (Instrument instrument : instruments) {
             moexMarketDataService.collectAndSaveSnapshot(instrument.getId())
-                    .map(PricePoint::getId)
-                    .ifPresent(savedIds::add);
+                    .ifPresent(pricePoint -> {
+                        savedIds.add(pricePoint.getId());
+                        priceChangeSignalService.generateForInstrument(instrument.getId());
+                    });
         }
 
         return savedIds;

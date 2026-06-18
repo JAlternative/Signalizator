@@ -3,6 +3,7 @@ package backend.controller;
 import backend.api.response.SignalResponse;
 import backend.persistence.entity.Signal;
 import backend.service.PriceChangeSignalService;
+import backend.service.SignalCommandService;
 import backend.service.SignalReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public class SignalDebugController {
 
     private final PriceChangeSignalService priceChangeSignalService;
     private final SignalReadService signalReadService;
+    private final SignalCommandService signalCommandService;
 
     @PostMapping("/price-change/instruments/{id}/generate")
     public ResponseEntity<Long> generatePriceChangeSignal(@PathVariable Long id) {
@@ -38,4 +40,19 @@ public class SignalDebugController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PostMapping("/{id}/ack")
+    public ResponseEntity<Void> ackSignal(@PathVariable Long id) {
+        return signalCommandService.ack(id)
+                .map(signal -> ResponseEntity.noContent().<Void>build())
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{id}/mute")
+    public ResponseEntity<Void> muteSignal(@PathVariable Long id) {
+        return signalCommandService.mute(id)
+                .map(signal -> ResponseEntity.noContent().<Void>build())
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

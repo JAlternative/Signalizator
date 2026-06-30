@@ -16,6 +16,16 @@ public class MoexWatchlistCollectorService {
     private final MoexMarketDataService moexMarketDataService;
     private final PriceChangeSignalService priceChangeSignalService;
 
+    /**
+     * Собирает один snapshot по всему enabled MOEX watchlist.
+     *
+     * Логика:
+     * 1. Берём все включённые MOEX-инструменты из БД.
+     * 2. По каждому инструменту идём в MOEX.
+     * 3. Сохраняем свежий snapshot в price_points.
+     * 4. После сохранения пробуем создать сигнал по изменению цены.
+     * 5. Возвращаем id сохранённых PricePoint.
+     */
     public List<Long> collectEnabledMoexWatchlistOnce() {
         List<Instrument> instruments = marketDirectoryService.getEnabledMoexInstruments();
         List<Long> savedIds = new ArrayList<>();

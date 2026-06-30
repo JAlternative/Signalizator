@@ -6,6 +6,8 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class MoexIssClient {
 
+
+
     private static final String SECURITY_URL_TEMPLATE =
             "%s/iss/engines/stock/markets/%s/boards/%s/securities/%s.json";
 

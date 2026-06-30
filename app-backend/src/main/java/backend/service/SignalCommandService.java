@@ -15,6 +15,12 @@ public class SignalCommandService {
 
     private final SignalRepository signalRepository;
 
+    /**
+     * ACK = пользователь подтвердил сигнал
+     * MUTED = пользователь заглушил сигнал
+     * NEW = новый необработанный сигнал
+     * */
+
     @Transactional
     public Optional<Signal> ack(Long id) {
         Optional<Signal> signalOptional = signalRepository.findById(id);

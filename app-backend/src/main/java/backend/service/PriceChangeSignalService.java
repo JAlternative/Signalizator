@@ -34,6 +34,12 @@ public class PriceChangeSignalService {
     private final RuleRepository ruleRepository;
     private final SignalRepository signalRepository;
 
+    /**
+     * берём последние 2 PricePoint
+     * сравниваем lastPrice
+     * если изменение сильное
+     * создаём Signal
+     * */
     @Transactional
     public Optional<Signal> generateForInstrument(Long instrumentId) {
         List<PricePoint> points =
@@ -86,6 +92,13 @@ public class PriceChangeSignalService {
         if (signalRepository.existsByDedupKey(dedupKey)) {
             return Optional.empty();
         }
+
+        /*
+         * PRICE_CHANGE = тип сигнала
+         * MEDIUM = важность
+         * NEW = новый сигнал
+         * dedupKey = защита от дублей
+         * */
 
         Signal signal = new Signal();
 

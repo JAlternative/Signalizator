@@ -15,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MoexTableMapper {
 
+
     private final ObjectMapper objectMapper;
 
     public <T> Optional<T> mapFirstRow(String rawJson, String tableName, Class<T> type) {

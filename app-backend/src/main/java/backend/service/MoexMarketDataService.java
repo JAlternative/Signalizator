@@ -56,6 +56,16 @@ public class MoexMarketDataService {
         return moexMarketDataParser.parseMarketDataSnapshot(rawJson.get());
     }
 
+    /**
+     * 1L
+     * -> нашёл Instrument с id = 1
+     * -> взял у него source / market / board / ticker
+     * -> сходил в MOEX
+     * -> получил raw JSON
+     * -> распарсил в MoexMarketDataSnapshot
+     * -> переложил в PricePoint
+     * -> сохранил в price_points
+     * */
     @Transactional
     public Optional<PricePoint> collectAndSaveSnapshot(Long instrumentId) {
         Optional<Instrument> instrumentOptional = marketDirectoryService.getInstrumentById(instrumentId);

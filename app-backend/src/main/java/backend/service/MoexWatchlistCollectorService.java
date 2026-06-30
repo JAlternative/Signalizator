@@ -14,7 +14,7 @@ public class MoexWatchlistCollectorService {
 
     private final MarketDirectoryService marketDirectoryService;
     private final MoexMarketDataService moexMarketDataService;
-    private final PriceChangeSignalService priceChangeSignalService;
+    private final SignalEngineService signalEngineService;
 
     /**
      * Собирает один snapshot по всему enabled MOEX watchlist.
@@ -34,7 +34,7 @@ public class MoexWatchlistCollectorService {
             moexMarketDataService.collectAndSaveSnapshot(instrument.getId())
                     .ifPresent(pricePoint -> {
                         savedIds.add(pricePoint.getId());
-                        priceChangeSignalService.generateForInstrument(instrument.getId());
+                        signalEngineService.analyzeInstrument(instrument.getId());
                     });
         }
 

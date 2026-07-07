@@ -18,10 +18,39 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Правило VOLUME_SPIKE.
+ *
+ * Простыми словами:
+ * этот сервис проверяет, не стало ли по акции резко больше сделок, чем обычно.
+ *
+ * Важно:
+ * volumeToday — это накопленный объём торгов за день.
+ * Он не показывает "купили" или "продали".
+ * Он показывает, сколько бумаг прошло через сделки.
+ *
+ * Поэтому мы считаем не сам volumeToday, а разницу между двумя соседними snapshot:
+ *
+ * currentDelta = текущий volumeToday - предыдущий volumeToday
+ *
+ * Если последний прирост объёма в несколько раз больше обычного прироста,
+ * создаём сигнал VOLUME_SPIKE.
+ */
 @Service
 @RequiredArgsConstructor
 public class VolumeSpikeSignalService {
 
+    /**
+     * Во сколько раз текущий прирост объёма должен быть больше обычного,
+     * чтобы мы посчитали это всплеском.
+     *
+     * Например:
+     * обычный прирост = 10 000
+     * текущий прирост = 35 000
+     *
+     * 35 000 >= 10 000 * 3
+     * значит это VOLUME_SPIKE.
+     */
     private static final long THRESHOLD_MULTIPLIER = 3;
 
     private final PricePointRepository pricePointRepository;
